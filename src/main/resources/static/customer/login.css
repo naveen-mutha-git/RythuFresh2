@@ -1,0 +1,647 @@
+/* =====================================================
+   RYTHUFRESH_SEC - CUSTOMER LOGIN
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+/* =====================================================
+   BODY
+===================================================== */
+
+body {
+
+    background:
+        linear-gradient(
+            135deg,
+            #43a047,
+            #81c784
+        );
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container {
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 30px;
+}
+
+
+/* =====================================================
+   LOGIN BOX
+===================================================== */
+
+.login-box {
+
+    width: 430px;
+
+    background: #ffffff;
+
+    padding: 40px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 35px
+        rgba(0, 0, 0, 0.20);
+}
+
+
+/* =====================================================
+   BRAND
+===================================================== */
+
+.login-box h1 {
+
+    text-align: center;
+
+    color: #2e7d32;
+
+    margin-bottom: 10px;
+
+    font-size: 30px;
+}
+
+
+.login-box .tagline {
+
+    text-align: center;
+
+    color: #666;
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+    margin-bottom: 20px;
+}
+
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.login-box h2 {
+
+    text-align: center;
+
+    color: #555;
+
+    margin-bottom: 30px;
+}
+
+
+/* =====================================================
+   INPUTS
+===================================================== */
+
+.login-box input {
+
+    width: 100%;
+
+    padding: 14px;
+
+    margin-bottom: 18px;
+
+    border: 2px solid #ddd;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    outline: none;
+
+    transition: 0.3s;
+}
+
+
+.login-box input:focus {
+
+    border-color: #43a047;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(67, 160, 71, 0.10);
+}
+
+
+/* =====================================================
+   FORGOT PASSWORD LINK
+===================================================== */
+
+.forgot-password-container {
+
+    text-align: right;
+
+    margin-top: -8px;
+
+    margin-bottom: 18px;
+}
+
+
+.forgot-password-container a {
+
+    color: #2e7d32;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.forgot-password-container a:hover {
+
+    text-decoration: underline;
+
+    color: #1b5e20;
+}
+
+
+/* =====================================================
+   LOGIN BUTTON
+===================================================== */
+
+.login-box button {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    background: #2e7d32;
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+
+.login-box button:hover {
+
+    background: #1b5e20;
+}
+
+
+/* =====================================================
+   ERROR MESSAGE
+===================================================== */
+
+.error-message {
+
+    color: red;
+
+    text-align: center;
+
+    margin-top: 15px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   REGISTER
+===================================================== */
+
+.login-box p {
+
+    margin-top: 20px;
+
+    text-align: center;
+}
+
+
+.login-box a {
+
+    color: #2e7d32;
+
+    text-decoration: none;
+
+    font-weight: 600;
+}
+
+
+.login-box a:hover {
+
+    text-decoration: underline;
+}
+
+
+.register-text {
+
+    color: #555;
+}
+
+
+/* =====================================================
+   FORGOT PASSWORD MODAL
+===================================================== */
+
+.forgot-password-modal {
+
+    display: none;
+
+    position: fixed;
+
+    z-index: 9999;
+
+    inset: 0;
+
+    background:
+        rgba(0, 0, 0, 0.55);
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+}
+
+
+/* =====================================================
+   MODAL BOX
+===================================================== */
+
+.forgot-password-box {
+
+    width: 100%;
+
+    max-width: 560px;
+
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    padding: 32px 36px;
+
+    box-shadow:
+        0 20px 50px
+        rgba(0, 0, 0, 0.25);
+
+    animation:
+        forgotModalOpen 0.25s ease;
+}
+
+
+@keyframes forgotModalOpen {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(-20px)
+            scale(0.97);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =====================================================
+   MODAL HEADER
+===================================================== */
+
+.forgot-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    border-bottom: 1px solid #eeeeee;
+
+    padding-bottom: 22px;
+
+    margin-bottom: 24px;
+}
+
+
+.forgot-header h2 {
+
+    color: #2e7d32;
+
+    font-size: 28px;
+
+    margin-bottom: 5px;
+}
+
+
+.forgot-header p {
+
+    color: #777;
+
+    font-size: 15px;
+
+    margin: 0;
+}
+
+
+/* =====================================================
+   CLOSE BUTTON
+===================================================== */
+
+.close-forgot-btn {
+
+    width: 42px !important;
+
+    height: 42px;
+
+    padding: 0 !important;
+
+    border: none;
+
+    border-radius: 50% !important;
+
+    background: #f1f1f1 !important;
+
+    color: #444 !important;
+
+    font-size: 28px !important;
+
+    font-weight: 400 !important;
+
+    cursor: pointer;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-shrink: 0;
+}
+
+
+.close-forgot-btn:hover {
+
+    background: #e0e0e0 !important;
+
+    color: #222 !important;
+}
+
+
+/* =====================================================
+   FORM GROUP
+===================================================== */
+
+.forgot-form-group {
+
+    margin-bottom: 20px;
+}
+
+
+.forgot-form-group label {
+
+    display: block;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    color: #333;
+
+    margin-bottom: 8px;
+}
+
+
+.forgot-form-group input {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border: 1px solid #d5d5d5;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    outline: none;
+
+    transition: 0.3s;
+}
+
+
+.forgot-form-group input:focus {
+
+    border-color: #2e7d32;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(46, 125, 50, 0.10);
+}
+
+
+.forgot-form-group small {
+
+    display: block;
+
+    margin-top: 6px;
+
+    color: #888;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   PASSWORD MESSAGE
+===================================================== */
+
+.forgot-password-message {
+
+    display: none;
+
+    padding: 12px 14px;
+
+    border-radius: 8px;
+
+    margin-bottom: 18px;
+
+    font-size: 14px;
+
+    font-weight: 500;
+}
+
+
+.forgot-password-message.success {
+
+    display: block;
+
+    color: #1b5e20;
+
+    background: #e8f5e9;
+
+    border: 1px solid #a5d6a7;
+}
+
+
+.forgot-password-message.error {
+
+    display: block;
+
+    color: #c62828;
+
+    background: #ffebee;
+
+    border: 1px solid #ffcdd2;
+}
+
+
+/* =====================================================
+   MODAL ACTIONS
+===================================================== */
+
+.forgot-actions {
+
+    display: flex;
+
+    gap: 12px;
+}
+
+
+.reset-password-btn {
+
+    flex: 1;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #2e7d32;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+
+.reset-password-btn:hover {
+
+    background: #1b5e20;
+}
+
+
+.reset-password-btn:disabled {
+
+    opacity: 0.7;
+
+    cursor: not-allowed;
+}
+
+
+.forgot-cancel-btn {
+
+    flex: 1;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #eeeeee;
+
+    color: #444;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.forgot-cancel-btn:hover {
+
+    background: #dddddd;
+}
+
+
+/* =====================================================
+   MOBILE RESPONSIVE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .login-box {
+
+        width: 100%;
+
+        padding: 28px 22px;
+    }
+
+
+    .forgot-password-box {
+
+        padding: 25px 20px;
+    }
+
+
+    .forgot-header h2 {
+
+        font-size: 23px;
+    }
+
+
+    .forgot-actions {
+
+        flex-direction: column;
+    }
+
+}

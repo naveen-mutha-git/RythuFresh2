@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>RythuFresh_Sec | My Orders</title>
+
+    <link rel="stylesheet"
+          href="my-orders.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav>
+
+        <div class="logo">
+            🥬 RythuFresh_Sec
+        </div>
+
+        <ul>
+
+            <li onclick="goToHome()">
+                Home
+            </li>
+
+            <li onclick="goToHome()">
+                Vegetables
+            </li>
+
+            <li>
+                Offers
+            </li>
+
+            <li>
+                Contact
+            </li>
+
+            <li class="active">
+                📦 My Orders
+            </li>
+
+            <li onclick="goToHome()">
+                🛒 Cart
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="orders-container">
+
+        <div class="page-header">
+
+            <h1>
+                📦 My Orders
+            </h1>
+
+            <p>
+                Track your orders and view your order history.
+            </p>
+
+        </div>
+
+
+        <!-- Orders will be loaded here -->
+
+        <div id="ordersContainer">
+
+            <div class="message">
+                Loading your orders...
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script src="my-orders.js"></script>
+
+</body>
+
+</html>

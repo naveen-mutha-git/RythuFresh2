@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RythuFresh_Sec - Customers</title>
+
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="customers.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="admin-header">
+
+        <div class="logo">
+            🌿 RythuFresh_Sec Admin
+        </div>
+
+        <button class="logout-btn" onclick="logout()">
+            Logout
+        </button>
+
+    </header>
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <h3>ADMIN PANEL</h3>
+
+        <a href="dashboard.html">
+            🏠 Dashboard
+        </a>
+
+        <a href="vegetables.html">
+            🥬 Vegetables
+        </a>
+
+        <a href="orders.html">
+            📦 Orders
+        </a>
+
+        <a href="customers.html" class="active">
+            👥 Customers
+        </a>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+        <h1>Customers</h1>
+
+        <p class="welcome">
+            Manage RythuFresh_Sec Customers
+        </p>
+
+
+        <!-- ================= CUSTOMER SECTION ================= -->
+
+        <section class="quick-actions">
+
+            <!-- CUSTOMER LIST HEADER + SEARCH -->
+
+            <div class="customer-list-header">
+
+                <h2>
+                    Customer List
+                </h2>
+
+                <input
+                    type="text"
+                    id="customerSearch"
+                    placeholder="🔍 Search by name, email or phone..."
+                    class="customer-search"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <!-- ================= CUSTOMER TABLE ================= -->
+
+            <div style="overflow-x: auto;">
+
+                <table
+                    style="
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 20px;
+                    "
+                >
+
+                    <thead>
+
+                        <tr
+                            style="
+                                background-color: #2e7d32;
+                                color: white;
+                            "
+                        >
+
+                            <th style="padding: 14px;">
+                                ID
+                            </th>
+
+                            <th style="padding: 14px;">
+                                Full Name
+                            </th>
+
+                            <th style="padding: 14px;">
+                                Email
+                            </th>
+
+                            <th style="padding: 14px;">
+                                Phone
+                            </th>
+
+                            <th style="padding: 14px;">
+                                Address
+                            </th>
+
+                            <th style="padding: 14px;">
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="customerTableBody">
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                style="
+                                    text-align: center;
+                                    padding: 20px;
+                                "
+                            >
+                                Loading customers...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= CUSTOMER DETAILS MODAL ================= -->
+
+    <div
+        id="customerModal"
+        class="customer-modal"
+    >
+
+        <div class="customer-modal-content">
+
+            <!-- MODAL HEADER -->
+
+            <div class="customer-modal-header">
+
+                <h2>
+                    👤 Customer Details
+                </h2>
+
+                <button
+                    class="close-customer-modal"
+                    onclick="closeCustomerModal()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- ================= CUSTOMER INFORMATION ================= -->
+
+            <div class="customer-info">
+
+                <div class="customer-info-box">
+
+                    <strong>
+                        Full Name
+                    </strong>
+
+                    <span id="modalCustomerName">
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="customer-info-box">
+
+                    <strong>
+                        Email
+                    </strong>
+
+                    <span id="modalCustomerEmail">
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="customer-info-box">
+
+                    <strong>
+                        Phone
+                    </strong>
+
+                    <span id="modalCustomerPhone">
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="customer-info-box">
+
+                    <strong>
+                        Address
+                    </strong>
+
+                    <span id="modalCustomerAddress">
+                        -
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= ORDER SUMMARY ================= -->
+
+            <h3>
+                📊 Order Summary
+            </h3>
+
+
+            <div class="customer-stats">
+
+                <!-- TOTAL ORDERS -->
+
+                <div class="customer-stat">
+
+                    <h3>
+                        Total Orders
+                    </h3>
+
+                    <p id="statTotalOrders">
+                        0
+                    </p>
+
+                </div>
+
+
+                <!-- PENDING -->
+
+                <div class="customer-stat">
+
+                    <h3>
+                        Pending
+                    </h3>
+
+                    <p id="statPending">
+                        0
+                    </p>
+
+                </div>
+
+
+                <!-- DELIVERED -->
+
+                <div class="customer-stat">
+
+                    <h3>
+                        Delivered
+                    </h3>
+
+                    <p id="statDelivered">
+                        0
+                    </p>
+
+                </div>
+
+
+                <!-- TOTAL SPENT -->
+
+                <div class="customer-stat">
+
+                    <h3>
+                        Total Spent
+                    </h3>
+
+                    <p id="statTotalSpent">
+                        ₹0
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= ORDER HISTORY ================= -->
+
+            <div class="order-history">
+
+                <h3>
+                    📋 Order History
+                </h3>
+
+
+                <div style="overflow-x: auto;">
+
+                    <table class="order-history-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Order ID
+                                </th>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    Total
+                                </th>
+
+                                <th>
+                                    Payment
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="customerOrderHistory">
+
+                            <tr>
+
+                                <td
+                                    colspan="5"
+                                    style="
+                                        text-align: center;
+                                        padding: 20px;
+                                    "
+                                >
+                                    Loading orders...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="customers.js"></script>
+
+</body>
+
+</html>

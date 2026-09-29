@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>RythuFresh_Sec | Customer Login</title>
+
+    <link rel="stylesheet"
+          href="/customer/login.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="login-box">
+
+        <!-- =========================================
+             LOGO
+        ========================================== -->
+
+        <h1>🥬 RythuFresh_Sec</h1>
+
+        <p class="tagline">
+            Fresh • Healthy • Affordable
+        </p>
+
+        <h2>Welcome Back</h2>
+
+
+        <!-- =========================================
+             LOGIN FORM
+        ========================================== -->
+
+        <div class="login-form">
+
+            <input
+                    type="email"
+                    id="email"
+                    placeholder="Email Address"
+                    autocomplete="email"
+            >
+
+            <input
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    autocomplete="current-password"
+            >
+
+
+            <!-- FORGOT PASSWORD -->
+
+            <div class="forgot-password-container">
+
+                <a href="#"
+                   onclick="openForgotPassword(); return false;">
+
+                    Forgot Password?
+
+                </a>
+
+            </div>
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+                    type="button"
+                    onclick="loginCustomer()">
+
+                Login
+
+            </button>
+
+
+            <!-- ERROR MESSAGE -->
+
+            <p id="errorMessage"
+               class="error-message">
+            </p>
+
+
+            <!-- REGISTER -->
+
+            <p class="register-text">
+
+                Don't have an account?
+
+                <a href="signup.html">
+                    Register
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     FORGOT PASSWORD MODAL
+====================================================== -->
+
+<div id="forgotPasswordModal"
+     class="forgot-password-modal">
+
+    <div class="forgot-password-box">
+
+
+        <!-- HEADER -->
+
+        <div class="forgot-header">
+
+            <div>
+
+                <h2>🔐 Forgot Password</h2>
+
+                <p>
+                    Reset your RythuFresh_Sec account password
+                </p>
+
+            </div>
+
+
+            <button
+                    type="button"
+                    class="close-forgot-btn"
+                    onclick="closeForgotPassword()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <form
+                id="forgotPasswordForm"
+                onsubmit="resetForgotPassword(event)">
+
+
+            <!-- EMAIL -->
+
+            <div class="forgot-form-group">
+
+                <label for="forgotEmail">
+                    Registered Email
+                </label>
+
+                <input
+                        type="email"
+                        id="forgotEmail"
+                        placeholder="Enter your registered email"
+                        autocomplete="email"
+                        required>
+
+            </div>
+
+
+            <!-- NEW PASSWORD -->
+
+            <div class="forgot-form-group">
+
+                <label for="forgotNewPassword">
+                    New Password
+                </label>
+
+                <input
+                        type="password"
+                        id="forgotNewPassword"
+                        placeholder="Enter new password"
+                        minlength="6"
+                        autocomplete="new-password"
+                        required>
+
+                <small>
+                    Password must contain at least 6 characters.
+                </small>
+
+            </div>
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div class="forgot-form-group">
+
+                <label for="forgotConfirmPassword">
+                    Confirm New Password
+                </label>
+
+                <input
+                        type="password"
+                        id="forgotConfirmPassword"
+                        placeholder="Confirm new password"
+                        minlength="6"
+                        autocomplete="new-password"
+                        required>
+
+            </div>
+
+
+            <!-- MESSAGE -->
+
+            <div id="forgotPasswordMessage"
+                 class="forgot-password-message">
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="forgot-actions">
+
+                <button
+                        type="submit"
+                        class="reset-password-btn">
+
+                    🔐 Reset Password
+
+                </button>
+
+
+                <button
+                        type="button"
+                        class="forgot-cancel-btn"
+                        onclick="closeForgotPassword()">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script src="/customer/login.js"></script>
+
+</body>
+
+</html>

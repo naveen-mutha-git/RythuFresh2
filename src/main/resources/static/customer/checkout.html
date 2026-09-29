@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RythuFresh_Sec | Checkout</title>
+
+    <link rel="stylesheet" href="checkout.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo" onclick="goHome()">
+        🥬 RythuFresh_Sec
+    </div>
+
+    <div class="secure-checkout">
+        🔒 Secure Checkout
+    </div>
+
+</nav>
+
+
+<!-- ================= CHECKOUT PAGE ================= -->
+
+<main class="checkout-container">
+
+    <!-- ================= LEFT SECTION ================= -->
+
+    <section class="checkout-left">
+
+        <div class="section-title">
+            <span class="section-icon">📍</span>
+
+            <div>
+                <h2>Delivery Details</h2>
+                <p>Enter your delivery information</p>
+            </div>
+        </div>
+
+
+        <form id="checkoutForm">
+
+            <!-- NAME + MOBILE -->
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="mobile">
+                        Mobile Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="mobile"
+                        placeholder="Enter 10-digit mobile number"
+                        maxlength="10"
+                        autocomplete="tel"
+                        required>
+
+                </div>
+
+            </div>
+
+
+            <!-- HOUSE -->
+
+            <div class="form-group">
+
+                <label for="house">
+                    House No / Flat
+                </label>
+
+                <input
+                    type="text"
+                    id="house"
+                    placeholder="Enter house / flat number"
+                    autocomplete="address-line1"
+                    required>
+
+            </div>
+
+
+            <!-- AREA -->
+
+            <div class="form-group">
+
+                <label for="area">
+                    Area / Street
+                </label>
+
+                <input
+                    type="text"
+                    id="area"
+                    placeholder="Enter area / street"
+                    autocomplete="address-line2"
+                    required>
+
+            </div>
+
+
+            <!-- LANDMARK + PINCODE -->
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="landmark">
+                        Landmark
+                    </label>
+
+                    <input
+                        type="text"
+                        id="landmark"
+                        placeholder="Optional">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="pincode">
+                        Pincode
+                    </label>
+
+                    <input
+                        type="text"
+                        id="pincode"
+                        placeholder="Enter pincode"
+                        maxlength="6"
+                        autocomplete="postal-code"
+                        required>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= DELIVERY TIME ================= -->
+
+            <div class="checkout-section">
+
+                <div class="section-title small">
+
+                    <span class="section-icon">
+                        🚚
+                    </span>
+
+                    <div>
+                        <h3>Delivery Time</h3>
+                        <p>Choose your preferred delivery slot</p>
+                    </div>
+
+                </div>
+
+
+                <label class="option-card">
+
+                    <input
+                        type="radio"
+                        name="deliveryTime"
+                        value="9 AM - 11 AM"
+                        checked>
+
+                    <div class="option-content">
+
+                        <strong>
+                            🌅 Next Morning
+                        </strong>
+
+                        <span>
+                            9:00 AM – 11:00 AM
+                        </span>
+
+                    </div>
+
+                </label>
+
+            </div>
+
+
+            <!-- ================= PAYMENT ================= -->
+
+            <div class="checkout-section">
+
+                <div class="section-title small">
+
+                    <span class="section-icon">
+                        💳
+                    </span>
+
+                    <div>
+                        <h3>Payment Method</h3>
+                        <p>Select your preferred payment method</p>
+                    </div>
+
+                </div>
+
+
+                <label class="option-card selected">
+
+                    <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="COD"
+                        checked>
+
+                    <div class="option-content">
+
+                        <strong>
+                            💵 Cash on Delivery
+                        </strong>
+
+                        <span>
+                            Pay when your order is delivered
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+                <label class="option-card disabled">
+
+                    <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="ONLINE"
+                        disabled>
+
+                    <div class="option-content">
+
+                        <strong>
+                            📱 Online Payment
+                        </strong>
+
+                        <span>
+                            Coming soon
+                        </span>
+
+                    </div>
+
+                </label>
+
+            </div>
+
+
+            <!-- ================= ADDRESS NOTE ================= -->
+
+            <div class="delivery-note">
+
+                <span>💚</span>
+
+                <p>
+                    Please make sure your address and mobile number
+                    are correct before placing the order.
+                </p>
+
+            </div>
+
+        </form>
+
+    </section>
+
+
+
+    <!-- ================= RIGHT SECTION ================= -->
+
+    <aside class="checkout-right">
+
+        <div class="summary-header">
+
+            <div>
+
+                <h2>Order Summary</h2>
+
+                <p>
+                    Review your items
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- PRODUCTS -->
+
+        <div id="orderItems" class="order-items">
+
+            <!-- checkout.js will insert products here -->
+
+        </div>
+
+
+        <!-- PRICE DETAILS -->
+
+        <div class="price-details">
+
+            <div class="price-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <span id="subtotal">
+                    ₹0
+                </span>
+
+            </div>
+
+
+            <div class="price-row">
+
+                <span>
+                    Delivery
+                </span>
+
+                <span class="delivery-charge">
+                    FREE
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL -->
+
+        <div class="total-row">
+
+            <span>
+                Total
+            </span>
+
+            <strong id="total">
+                ₹0
+            </strong>
+
+        </div>
+
+
+        <!-- PLACE ORDER -->
+
+        <button
+            type="button"
+            class="place-order-btn"
+            onclick="placeOrder()">
+
+            <span>
+                🛒
+            </span>
+
+            Place Order
+
+        </button>
+
+
+        <div class="secure-message">
+
+            🔒
+            Your information is safe and secure
+
+        </div>
+
+    </aside>
+
+</main>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script src="checkout.js"></script>
+
+</body>
+
+</html>

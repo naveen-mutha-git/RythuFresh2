@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>RythuFresh_Sec - Orders</title>
+
+    <link
+        rel="stylesheet"
+        href="orders.css"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="admin-header">
+
+        <div class="logo">
+            🌿 RythuFresh_Sec Admin
+        </div>
+
+        <button
+            class="logout-btn"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </header>
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <h3>ADMIN PANEL</h3>
+
+        <a href="dashboard.html">
+            🏠 Dashboard
+        </a>
+
+        <a href="vegetables.html">
+            🥬 Vegetables
+        </a>
+
+        <a
+            href="orders.html"
+            class="active"
+        >
+            📦 Orders
+        </a>
+
+        <a href="customers.html">
+            👥 Customers
+        </a>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+        <!-- ================= PAGE HEADER ================= -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+                    Orders
+                </h1>
+
+                <p>
+                    Manage RythuFresh_Sec customer orders
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= ORDER SUMMARY ================= -->
+
+        <section class="order-summary">
+
+            <!-- TOTAL ORDERS -->
+
+            <div class="summary-card">
+
+                <h3>
+                    Total Orders
+                </h3>
+
+                <p id="totalOrders">
+                    0
+                </p>
+
+            </div>
+
+
+            <!-- PENDING -->
+
+            <div class="summary-card">
+
+                <h3>
+                    Pending
+                </h3>
+
+                <p id="pendingOrders">
+                    0
+                </p>
+
+            </div>
+
+
+            <!-- CONFIRMED -->
+
+            <div class="summary-card">
+
+                <h3>
+                    Confirmed
+                </h3>
+
+                <p id="confirmedOrders">
+                    0
+                </p>
+
+            </div>
+
+
+            <!-- DELIVERED -->
+
+            <div class="summary-card">
+
+                <h3>
+                    Delivered
+                </h3>
+
+                <p id="deliveredOrders">
+                    0
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ORDERS TABLE ================= -->
+
+        <section class="table-card">
+
+
+            <!-- ================= TABLE HEADER ================= -->
+
+            <div class="table-header">
+
+                <h2>
+                    Order List
+                </h2>
+
+
+                <div class="table-controls order-filters">
+
+
+                    <!-- SEARCH -->
+
+                    <input
+                        type="text"
+                        id="orderSearch"
+                        class="order-search"
+                        placeholder="🔍 Search by Order ID, Customer..."
+                    >
+
+
+                    <!-- STATUS FILTER -->
+
+                    <select
+                        id="statusFilter"
+                        class="status-filter"
+                    >
+
+                        <option value="All">
+                            All Status
+                        </option>
+
+                        <option value="Pending">
+                            Pending
+                        </option>
+
+                        <option value="Confirmed">
+                            Confirmed
+                        </option>
+
+                        <option value="Preparing">
+                            Preparing
+                        </option>
+
+                        <option value="Out for Delivery">
+                            Out for Delivery
+                        </option>
+
+                        <option value="Delivered">
+                            Delivered
+                        </option>
+
+                        <option value="Cancelled">
+                            Cancelled
+                        </option>
+
+                    </select>
+
+
+                    <!-- REFRESH -->
+
+                    <button
+                        class="refresh-btn"
+                        onclick="loadOrders()"
+                    >
+                        🔄 Refresh
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= TABLE ================= -->
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Order ID
+                            </th>
+
+                            <th>
+                                Customer
+                            </th>
+
+                            <th>
+                                Mobile
+                            </th>
+
+                            <th>
+                                Address
+                            </th>
+
+                            <th>
+                                Items
+                            </th>
+
+                            <th>
+                                Total
+                            </th>
+
+                            <th>
+                                Payment
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="ordersTableBody">
+
+                        <tr>
+
+                            <td
+                                colspan="10"
+                                class="loading"
+                            >
+                                Loading orders...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         ORDER DETAILS MODAL
+    ====================================================== -->
+
+    <div
+        id="orderModal"
+        class="modal"
+    >
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+
+                <h2>
+                    Order Details
+                </h2>
+
+                <button
+                    class="close-btn"
+                    onclick="closeOrderModal()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div id="orderDetails">
+
+                Loading...
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         STATUS UPDATE MODAL
+    ====================================================== -->
+
+    <div
+        id="statusModal"
+        class="modal"
+    >
+
+        <div class="status-modal-content">
+
+
+            <!-- STATUS MODAL HEADER -->
+
+            <div class="status-modal-header">
+
+                <div>
+
+                    <h2>
+                        🔄 Update Order Status
+                    </h2>
+
+                    <p id="statusOrderTitle">
+                        Order Status
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="close-btn"
+                    onclick="closeStatusModal()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- STATUS FORM -->
+
+            <div class="status-form">
+
+
+                <!-- CURRENT STATUS -->
+
+                <label>
+                    Current Status
+                </label>
+
+                <div
+                    id="currentStatusDisplay"
+                    class="current-status-display"
+                >
+                    Pending
+                </div>
+
+
+                <!-- NEW STATUS -->
+
+                <label for="newOrderStatus">
+                    Change Status
+                </label>
+
+                <select
+                    id="newOrderStatus"
+                    class="status-select"
+                >
+
+                    <option value="Pending">
+                        Pending
+                    </option>
+
+                    <option value="Confirmed">
+                        Confirmed
+                    </option>
+
+                    <option value="Preparing">
+                        Preparing
+                    </option>
+
+                    <option value="Out for Delivery">
+                        Out for Delivery
+                    </option>
+
+                    <option value="Delivered">
+                        Delivered
+                    </option>
+
+                    <option value="Cancelled">
+                        Cancelled
+                    </option>
+
+                </select>
+
+
+                <!-- STATUS ACTIONS -->
+
+                <div class="status-actions">
+
+                    <button
+                        class="cancel-status-btn"
+                        onclick="closeStatusModal()"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        class="update-status-btn"
+                        onclick="saveOrderStatus()"
+                    >
+                        ✅ Update Status
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="orders.js"></script>
+
+</body>
+
+</html>

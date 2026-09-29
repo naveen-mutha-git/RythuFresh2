@@ -1,0 +1,103 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #43a047, #81c784);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.register-box {
+    width: 430px;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.register-box h1 {
+    text-align: center;
+    color: #2e7d32;
+    margin-bottom: 10px;
+}
+.register-box .tagline {
+    text-align: center;
+    color: #666;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: -5px;
+    margin-bottom: 20px;
+}
+
+.register-box h2 {
+    text-align: center;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.register-box input,
+.register-box textarea {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 18px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.register-box input:focus,
+.register-box textarea:focus {
+    border-color: #43a047;
+}
+
+.register-box textarea {
+    resize: none;
+    height: 90px;
+}
+
+.register-box button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    background: #2e7d32;
+    color: white;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.register-box button:hover {
+    background: #1b5e20;
+}
+
+.register-box p {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.register-box a {
+    color: #2e7d32;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.register-box a:hover {
+    text-decoration: underline;
+}

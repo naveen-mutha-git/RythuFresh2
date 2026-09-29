@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>RythuFresh_Sec | Product Details</title>
+
+    <link rel="stylesheet" href="product.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+
+<!-- ================= PRODUCT NAVBAR ================= -->
+
+<nav class="product-navbar">
+
+    <!-- LOGO -->
+
+    <div class="product-logo"
+         onclick="goHome()">
+
+        🥬 RythuFresh_Sec
+
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+
+    <div class="product-nav-links">
+
+        <button onclick="goHome()">
+            Home
+        </button>
+
+        <button class="product-cart-link"
+        onclick="openCart()">
+
+            🛒 My Cart
+            (<span id="productCartCount">0</span>)
+
+        </button>
+
+    </div>
+
+</nav>
+<!-- ================= PRODUCT PAGE CART SIDEBAR ================= -->
+
+<div id="cartSidebar" class="cart-sidebar">
+
+    <div class="cart-header">
+
+        <h2>🛒 My Cart</h2>
+
+        <span onclick="closeCart()">✖</span>
+
+    </div>
+
+    <div id="cartItems">
+        <!-- Cart items will come from JavaScript -->
+    </div>
+
+    <div class="cart-footer">
+
+        <h3 id="totalPrice">
+            Total : ₹0
+        </h3>
+
+        <button onclick="goToCheckout()">
+            Checkout
+        </button>
+
+    </div>
+
+</div>
+
+<!-- ================= PRODUCT CONTENT ================= -->
+
+<div class="container">
+
+    <div class="product-card">
+
+
+        <!-- ================= IMAGE ================= -->
+
+        <div class="image-section">
+
+            <img
+                src=""
+                alt="Vegetable"
+                id="productImage">
+
+        </div>
+
+
+        <!-- ================= PRODUCT DETAILS ================= -->
+
+        <div class="details-section">
+
+
+            <!-- PRODUCT NAME -->
+
+            <h1 id="productName">
+                Loading...
+            </h1>
+
+
+            <!-- TAGLINE -->
+
+            <p class="tagline"
+               id="productTagline">
+
+                Fresh • Healthy • Premium Quality 🥬
+
+            </p>
+
+
+            <!-- PRICE -->
+
+            <h2 id="productPrice">
+                ₹0 / Kg
+            </h2>
+
+
+            <!-- DESCRIPTION -->
+
+            <p class="description"
+               id="productDescription">
+
+                Loading description...
+
+            </p>
+
+
+            <!-- ================= HEALTH BENEFITS ================= -->
+
+            <h3>
+                Health Benefits
+            </h3>
+
+            <ul id="healthBenefits">
+            </ul>
+
+
+            <!-- ================= QUANTITY ================= -->
+
+            <h3>
+                Quantity
+            </h3>
+
+            <div class="quantity-box">
+
+                <button id="minusBtn">
+                    −
+                </button>
+
+                <span id="quantity">
+                    1
+                </span>
+
+                <button id="plusBtn">
+                    +
+                </button>
+
+            </div>
+
+
+            <!-- ================= ADD TO CART ================= -->
+
+            <button
+                class="cart-btn"
+                onclick="addToCart()">
+
+                🛒 Add To Cart
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script src="product.js"></script>
+
+
+</body>
+
+</html>

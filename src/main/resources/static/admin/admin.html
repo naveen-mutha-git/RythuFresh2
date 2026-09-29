@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RythuFresh_Sec | Fresh Vegetables Delivery Admin</title>
+
+    <link rel="stylesheet" href="admin.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>🥬 RythuFresh_Sec Admin Panel</h1>
+
+    <p>Manage Vegetables Easily</p>
+
+    <a href="orders.html" class="orders-btn">
+        📦 Manage Orders
+    </a>
+
+</header>
+<!-- ================= Dashboard ================= -->
+
+<section class="dashboard">
+
+    <div class="dashboard-card">
+
+        <div class="icon green">
+            🥬
+        </div>
+
+        <div class="info">
+
+            <h3>Total Vegetables</h3>
+
+            <h2 id="totalVeg">0</h2>
+
+        </div>
+
+    </div>
+
+    <div class="dashboard-card">
+
+        <div class="icon blue">
+            ✅
+        </div>
+
+        <div class="info">
+
+            <h3>In Stock</h3>
+
+            <h2 id="stockCount">0</h2>
+
+        </div>
+
+    </div>
+
+    <div class="dashboard-card">
+
+        <div class="icon red">
+            ❌
+        </div>
+
+        <div class="info">
+
+            <h3>Out Of Stock</h3>
+
+            <h2 id="outStockCount">0</h2>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= Main Content ================= -->
+
+<section class="container">
+
+    <!-- Left Form -->
+
+    <div class="form-box">
+
+        <h2>Add / Update Vegetable</h2>
+
+        <input type="hidden" id="vegId">
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Vegetable Name">
+
+        <input
+            type="text"
+            id="teluguName"
+            placeholder="Telugu Name">
+
+        <input
+            type="number"
+            id="price"
+            placeholder="Price">
+
+        <input
+            type="text"
+            id="unit"
+            placeholder="Unit (kg, dozen...)">
+
+        <input
+            type="number"
+            id="quantity"
+            placeholder="Available Quantity">
+            <textarea
+    id="description"
+    placeholder="Vegetable Description"></textarea>
+
+<textarea
+    id="healthBenefits"
+    placeholder="Health Benefits (Each benefit in a new line)"></textarea>
+
+        <input
+    type="file"
+    id="imageFile"
+    accept="image/*"
+     onchange="previewImage(event)">
+
+<input
+    type="hidden"
+    id="imageUrl">
+    <div class="image-preview-box">
+    <img
+        id="preview"
+        src=""
+        alt="Preview"
+        style="display:none;">
+</div>
+
+        <button onclick="saveVegetable()">
+
+            Save Vegetable
+
+        </button>
+
+    </div>
+
+    <!-- Right Table -->
+
+    <div class="table-box">
+
+        <!-- ================= Added Search ================= -->
+
+        <div class="table-header">
+
+            <h2>Vegetables</h2>
+
+            <input
+                type="text"
+                id="search"
+                placeholder="🔍 Search Vegetable..."
+                onkeyup="searchVegetables()">
+
+        </div>
+
+        <!-- ================================================ -->
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Name</th>
+
+                    <th>Price</th>
+
+                    <th>Quantity</th>
+
+                    <th>Stock</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="vegetableTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<script src="admin.js"></script>
+
+</body>
+
+</html>

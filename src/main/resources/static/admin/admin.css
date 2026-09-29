@@ -1,0 +1,322 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f5f7fa;
+}
+
+/* ================= HEADER ================= */
+
+header{
+    background:#2e7d32;
+    color:white;
+    text-align:center;
+    padding:25px;
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+header h1{
+    font-size:38px;
+}
+
+header p{
+    margin-top:8px;
+    font-size:18px;
+}
+
+/* ================= DASHBOARD ================= */
+
+.dashboard{
+    display:flex;
+    gap:25px;
+    padding:30px;
+}
+
+.dashboard-card{
+    flex:1;
+    background:#fff;
+    border-radius:15px;
+    padding:25px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    box-shadow:0 5px 15px rgba(0,0,0,.12);
+    transition:.3s;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-5px);
+}
+
+.icon{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    color:white;
+}
+
+.green{
+    background:#2e7d32;
+}
+
+.blue{
+    background:#2196f3;
+}
+
+.red{
+    background:#e53935;
+}
+
+.info h3{
+    color:#666;
+    font-size:18px;
+    margin-bottom:5px;
+}
+
+.info h2{
+    font-size:34px;
+    color:#222;
+}
+
+/* ================= MAIN ================= */
+
+.container{
+    display:flex;
+    gap:30px;
+    padding:30px;
+    align-items:flex-start;
+}
+
+/* ================= FORM ================= */
+
+.form-box{
+    width:350px;
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+.form-box h2{
+    margin-bottom:20px;
+    color:#2e7d32;
+}
+
+.form-box input{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    font-size:15px;
+}
+
+.form-box button{
+    width:100%;
+    background:#2e7d32;
+    color:white;
+    border:none;
+    padding:14px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+}
+
+.form-box button:hover{
+    background:#1b5e20;
+}
+
+/* ================= TABLE ================= */
+
+.table-box{
+    flex:1;
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+.table-box h2{
+    color:#2e7d32;
+}
+
+/* ================= SEARCH ================= */
+
+.table-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.table-header input{
+    width:280px;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    font-size:15px;
+    outline:none;
+    transition:.3s;
+}
+
+.table-header input:focus{
+    border-color:#2e7d32;
+    box-shadow:0 0 6px rgba(46,125,50,.3);
+}
+
+/* ================= TABLE ================= */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#2e7d32;
+    color:white;
+    padding:14px;
+}
+
+td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid #ddd;
+}
+
+/* ================= BUTTONS ================= */
+
+.edit-btn{
+    background:#2196f3;
+    color:white;
+    border:none;
+    padding:8px 14px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-right:8px;
+}
+
+.edit-btn:hover{
+    background:#1976d2;
+}
+
+.delete-btn{
+    background:#e53935;
+    color:white;
+    border:none;
+    padding:8px 14px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.delete-btn:hover{
+    background:#c62828;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+.dashboard{
+    flex-direction:column;
+}
+
+.container{
+    flex-direction:column;
+}
+
+.form-box{
+    width:100%;
+}
+
+.table-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+}
+
+.table-header input{
+    width:100%;
+}
+
+table{
+    font-size:14px;
+}
+.image-preview-box{
+    margin-top:15px;
+    text-align:center;
+}
+#preview{
+    width:50px;
+    height:50px;
+    object-fit:cover;
+    border-radius:10px;
+    border:2px solid #ddd;
+    padding:5px;
+    background:white;
+}
+.form-box textarea{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-bottom:15px;
+
+    border:2px solid #ddd;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    font-family:'Poppins',sans-serif;
+
+    resize:vertical;
+
+    min-height:120px;
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+.form-box textarea:focus{
+
+    border-color:#2e7d32;
+
+}
+
+.form-box textarea::placeholder{
+
+    color:#888;
+
+}
+/* ================= ORDERS BUTTON ================= */
+
+.orders-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 25px;
+    background: white;
+    color: #2e7d32;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.orders-btn:hover {
+    background: #e8f5e9;
+    transform: translateY(-2px);
+}
+}

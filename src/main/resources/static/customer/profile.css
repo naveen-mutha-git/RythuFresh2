@@ -1,0 +1,983 @@
+/* =====================================================
+   RYTHUFRESH_SEC - CUSTOMER PROFILE
+===================================================== */
+
+
+/* ================= GLOBAL ================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7f4;
+    color: #333;
+    min-height: 100vh;
+}
+
+
+/* ================= HEADER ================= */
+
+.profile-header {
+    height: 70px;
+    background: #2e7d32;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 40px;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.back-btn {
+    border: none;
+    background: white;
+    color: #2e7d32;
+
+    padding: 10px 18px;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.back-btn:hover {
+    background: #e8f5e9;
+    transform: translateY(-1px);
+}
+
+
+/* ================= MAIN ================= */
+
+.profile-container {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 40px auto;
+
+    padding: 0 20px;
+}
+
+
+/* ================= PROFILE CARD ================= */
+
+.profile-card {
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ================= PROFILE TITLE ================= */
+
+.profile-title {
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+
+    border-bottom: 1px solid #eee;
+}
+
+.profile-icon {
+    width: 65px;
+    height: 65px;
+
+    border-radius: 50%;
+
+    background: #e8f5e9;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 32px;
+}
+
+.profile-title h1 {
+    font-size: 28px;
+    color: #2e7d32;
+
+    margin-bottom: 5px;
+}
+
+.profile-title p {
+    color: #777;
+    font-size: 14px;
+}
+
+
+/* ================= FORM ================= */
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: 1px solid #d5d5d5;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-family: inherit;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #2e7d32;
+
+    box-shadow:
+        0 0 0 3px rgba(46, 125, 50, 0.10);
+}
+
+.form-group input[readonly] {
+    background: #f5f5f5;
+
+    color: #777;
+
+    cursor: not-allowed;
+}
+
+.form-group textarea {
+    resize: vertical;
+
+    min-height: 100px;
+}
+
+.form-group small {
+    display: block;
+
+    margin-top: 6px;
+
+    color: #888;
+
+    font-size: 12px;
+}
+
+
+/* ================= PROFILE BUTTONS ================= */
+
+.profile-actions {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 10px;
+}
+
+.save-btn,
+.cancel-btn {
+    border: none;
+
+    padding: 12px 22px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.save-btn {
+    background: #2e7d32;
+    color: white;
+}
+
+.save-btn:hover {
+    background: #256b29;
+
+    transform: translateY(-1px);
+}
+
+.save-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.cancel-btn {
+    background: #eeeeee;
+    color: #444;
+}
+
+.cancel-btn:hover {
+    background: #dddddd;
+}
+
+
+/* ================= PROFILE MESSAGE ================= */
+
+.profile-message {
+    margin-top: 15px;
+
+    padding: 10px 12px;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+
+    display: none;
+}
+
+.profile-message.success {
+    display: block;
+
+    background: #e8f5e9;
+
+    color: #2e7d32;
+
+    border: 1px solid #c8e6c9;
+}
+
+.profile-message.error {
+    display: block;
+
+    background: #ffebee;
+
+    color: #c62828;
+
+    border: 1px solid #ffcdd2;
+}
+
+
+/* ================= ACCOUNT SETTINGS ================= */
+
+.account-actions {
+    margin-top: 35px;
+
+    padding-top: 30px;
+
+    border-top: 1px solid #eee;
+}
+
+.account-actions h2 {
+    font-size: 20px;
+
+    margin-bottom: 18px;
+
+    color: #333;
+}
+
+.password-btn,
+.logout-account-btn {
+    width: 100%;
+
+    padding: 13px;
+
+    margin-bottom: 12px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.password-btn {
+    background: white;
+
+    color: #2e7d32;
+
+    border: 1px solid #2e7d32;
+}
+
+.password-btn:hover {
+    background: #e8f5e9;
+}
+
+.logout-account-btn {
+    background: white;
+
+    color: #c62828;
+
+    border: 1px solid #c62828;
+}
+
+.logout-account-btn:hover {
+    background: #ffebee;
+}
+
+
+/* =====================================================
+   CHANGE PASSWORD MODAL
+===================================================== */
+
+.password-modal {
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    z-index: 9999;
+}
+
+
+/* MODAL OPEN */
+
+.password-modal.show {
+    display: flex;
+}
+
+
+/* MODAL CONTENT */
+
+.password-modal-content {
+    width: 100%;
+    max-width: 520px;
+
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.25);
+
+    animation: passwordModalOpen 0.2s ease;
+}
+
+
+/* MODAL ANIMATION */
+
+@keyframes passwordModalOpen {
+
+    from {
+        opacity: 0;
+        transform: translateY(-15px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* MODAL HEADER */
+
+.password-modal-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+    padding-bottom: 20px;
+
+    margin-bottom: 20px;
+
+    border-bottom: 1px solid #eee;
+}
+
+.password-modal-header h2 {
+    color: #2e7d32;
+
+    font-size: 23px;
+
+    margin-bottom: 6px;
+}
+
+.password-modal-header p {
+    color: #777;
+
+    font-size: 13px;
+}
+
+
+/* CLOSE BUTTON */
+
+.close-password-btn {
+    width: 35px;
+    height: 35px;
+
+    border: none;
+
+    background: #f1f1f1;
+
+    color: #444;
+
+    border-radius: 50%;
+
+    font-size: 25px;
+
+    line-height: 30px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.close-password-btn:hover {
+    background: #ffebee;
+
+    color: #c62828;
+}
+
+
+/* PASSWORD MESSAGE */
+
+.password-message {
+    display: none;
+
+    margin-top: 10px;
+
+    padding: 11px 12px;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+}
+
+.password-message.success {
+    display: block;
+
+    background: #e8f5e9;
+
+    color: #2e7d32;
+
+    border: 1px solid #c8e6c9;
+}
+
+.password-message.error {
+    display: block;
+
+    background: #ffebee;
+
+    color: #c62828;
+
+    border: 1px solid #ffcdd2;
+}
+
+
+/* PASSWORD BUTTONS */
+
+.password-actions {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+.update-password-btn,
+.password-cancel-btn {
+    flex: 1;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.update-password-btn {
+    border: none;
+
+    background: #2e7d32;
+
+    color: white;
+}
+
+.update-password-btn:hover {
+    background: #256b29;
+}
+
+.update-password-btn:disabled {
+    opacity: 0.7;
+
+    cursor: not-allowed;
+}
+
+.password-cancel-btn {
+    border: none;
+
+    background: #eeeeee;
+
+    color: #444;
+}
+
+.password-cancel-btn:hover {
+    background: #dddddd;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 600px) {
+
+    .profile-header {
+        height: 62px;
+
+        padding: 0 15px;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+
+    .back-btn {
+        padding: 8px 12px;
+
+        font-size: 13px;
+    }
+
+    .profile-container {
+        margin: 20px auto;
+
+        padding: 0 12px;
+    }
+
+    .profile-card {
+        padding: 22px 18px;
+
+        border-radius: 10px;
+    }
+
+    .profile-title {
+        gap: 12px;
+    }
+
+    .profile-icon {
+        width: 52px;
+        height: 52px;
+
+        font-size: 25px;
+    }
+
+    .profile-title h1 {
+        font-size: 22px;
+    }
+
+    .profile-title p {
+        font-size: 12px;
+    }
+
+    .profile-actions {
+        flex-direction: column;
+    }
+
+    .save-btn,
+    .cancel-btn {
+        width: 100%;
+    }
+
+    /* PASSWORD MODAL */
+
+    .password-modal {
+        padding: 12px;
+    }
+
+    .password-modal-content {
+        padding: 22px 18px;
+
+        max-height: 90vh;
+
+        overflow-y: auto;
+    }
+
+    .password-modal-header h2 {
+        font-size: 20px;
+    }
+
+    .password-actions {
+        flex-direction: column;
+    }
+
+    .update-password-btn,
+    .password-cancel-btn {
+        width: 100%;
+    }
+    /* =====================================================
+   CHANGE PASSWORD MODAL
+   ===================================================== */
+
+.password-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    z-index: 9999;
+}
+
+
+/* SHOW MODAL */
+
+.password-modal.show {
+    display: flex;
+}
+
+
+/* MODAL CONTENT */
+
+.password-modal-content {
+
+    width: 100%;
+    max-width: 650px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: white;
+
+    border-radius: 16px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.25);
+
+    animation:
+        passwordModalAnimation
+        0.25s ease;
+}
+
+
+/* ANIMATION */
+
+@keyframes passwordModalAnimation {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(-20px)
+            scale(0.97);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* MODAL HEADER */
+
+.password-modal-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding-bottom: 20px;
+
+    margin-bottom: 25px;
+
+    border-bottom:
+        1px solid #eeeeee;
+}
+
+
+.password-modal-header h2 {
+
+    margin: 0 0 6px 0;
+
+    color: #2e7d32;
+
+    font-size: 27px;
+}
+
+
+.password-modal-header p {
+
+    margin: 0;
+
+    color: #777;
+
+    font-size: 14px;
+}
+
+
+/* CLOSE BUTTON */
+
+.close-password-btn {
+
+    width: 44px;
+    height: 44px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f1f1f1;
+
+    color: #444;
+
+    font-size: 28px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    transition: 0.2s;
+}
+
+
+.close-password-btn:hover {
+
+    background: #e5e5e5;
+
+    transform: rotate(90deg);
+}
+
+
+/* PASSWORD MESSAGE */
+
+.password-message {
+
+    display: none;
+
+    margin-top: 15px;
+
+    padding: 12px 14px;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+}
+
+
+.password-message.success {
+
+    display: block;
+
+    background: #e8f5e9;
+
+    color: #2e7d32;
+
+    border:
+        1px solid #c8e6c9;
+}
+
+
+.password-message.error {
+
+    display: block;
+
+    background: #ffebee;
+
+    color: #c62828;
+
+    border:
+        1px solid #ffcdd2;
+}
+
+
+/* PASSWORD BUTTONS */
+
+.password-actions {
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 22px;
+}
+
+
+.update-password-btn,
+.password-cancel-btn {
+
+    flex: 1;
+
+    border: none;
+
+    padding: 13px 20px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.update-password-btn {
+
+    background: #2e7d32;
+
+    color: white;
+}
+
+
+.update-password-btn:hover {
+
+    background: #256b29;
+
+    transform:
+        translateY(-1px);
+}
+
+
+.update-password-btn:disabled {
+
+    opacity: 0.7;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+.password-cancel-btn {
+
+    background: #eeeeee;
+
+    color: #444;
+}
+
+
+.password-cancel-btn:hover {
+
+    background: #dddddd;
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+    .password-modal {
+
+        padding: 12px;
+    }
+
+
+    .password-modal-content {
+
+        padding: 22px 18px;
+
+        border-radius: 12px;
+
+        max-height: 94vh;
+    }
+
+
+    .password-modal-header h2 {
+
+        font-size: 22px;
+    }
+
+
+    .password-modal-header p {
+
+        font-size: 12px;
+    }
+
+
+    .password-actions {
+
+        flex-direction: column;
+    }
+
+
+    .update-password-btn,
+    .password-cancel-btn {
+
+        width: 100%;
+    }
+}
+}

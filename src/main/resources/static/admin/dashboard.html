@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>RythuFresh_Sec Admin Dashboard</title>
+
+    <link rel="stylesheet"
+          href="dashboard.css">
+
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="admin-header">
+
+        <div class="logo">
+            🌿 RythuFresh_Sec Admin
+        </div>
+
+        <button class="logout-btn"
+                onclick="logout()">
+            Logout
+        </button>
+
+    </header>
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <h3>ADMIN PANEL</h3>
+
+        <a href="dashboard.html">
+            🏠 Dashboard
+        </a>
+
+        <a href="vegetables.html">
+            🥬 Vegetables
+        </a>
+
+        <a href="orders.html">
+            📦 Orders
+        </a>
+
+        <a href="customers.html">
+            👥 Customers
+        </a>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+        <h1>Dashboard</h1>
+
+        <p class="welcome">
+            Welcome to RythuFresh_Sec Admin Panel
+        </p>
+
+
+        <!-- ================= STAT CARDS ================= -->
+
+        <section class="dashboard-cards">
+
+
+            <!-- TOTAL VEGETABLES -->
+
+            <div class="card"
+                 onclick="openVegetables()"
+                 style="cursor: pointer;">
+
+                <h3>
+                    🥬 Total Vegetables
+                </h3>
+
+                <p id="vegetableCount">
+                    0
+                </p>
+
+            </div>
+
+
+            <!-- TOTAL ORDERS -->
+
+            <div class="card"
+                 onclick="openOrders()"
+                 style="cursor: pointer;">
+
+                <h3>
+                    📦 Total Orders
+                </h3>
+
+                <p id="orderCount">
+                    0
+                </p>
+
+            </div>
+
+
+            <!-- TOTAL CUSTOMERS -->
+
+            <div class="card"
+                 onclick="openCustomers()"
+                 style="cursor: pointer;">
+
+                <h3>
+                    👥 Total Customers
+                </h3>
+
+                <p id="customerCount">
+                    0
+                </p>
+
+            </div>
+
+
+            <!-- TODAY'S ORDERS -->
+
+            <div class="card"
+                 onclick="openOrders()"
+                 style="cursor: pointer;">
+
+                <h3>
+                    📅 Today's Orders
+                </h3>
+
+                <p id="todayOrderCount">
+                    0
+                </p>
+
+            </div>
+
+
+            <!-- ================= NEW CARDS ================= -->
+
+
+            <!-- TODAY'S REVENUE -->
+
+            <div class="card">
+
+                <h3>
+                    💰 Today's Revenue
+                </h3>
+
+                <p id="todayRevenue">
+                    ₹0.00
+                </p>
+
+            </div>
+
+
+            <!-- TOTAL REVENUE -->
+
+            <div class="card">
+
+                <h3>
+                    💰 Total Revenue
+                </h3>
+
+                <p id="totalRevenue">
+                    ₹0.00
+                </p>
+
+            </div>
+
+
+            <!-- PENDING ORDERS -->
+
+            <div class="card"
+                 onclick="openOrders()"
+                 style="cursor: pointer;">
+
+                <h3>
+                    🟠 Pending Orders
+                </h3>
+
+                <p id="pendingOrders">
+                    0
+                </p>
+
+            </div>
+
+
+            <!-- DELIVERED ORDERS -->
+
+            <div class="card"
+                 onclick="openOrders()"
+                 style="cursor: pointer;">
+
+                <h3>
+                    🟢 Delivered Orders
+                </h3>
+
+                <p id="deliveredOrders">
+                    0
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================= QUICK ACTIONS ================= -->
+
+        <section class="quick-actions">
+
+            <h2>
+                Quick Actions
+            </h2>
+
+            <div class="action-buttons">
+
+                <button onclick="openVegetables()">
+                    🥬 Manage Vegetables
+                </button>
+
+                <button onclick="openOrders()">
+                    📦 View Orders
+                </button>
+
+                <button onclick="openCustomers()">
+                    👥 View Customers
+                </button>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="dashboard.js"></script>
+
+</body>
+
+</html>

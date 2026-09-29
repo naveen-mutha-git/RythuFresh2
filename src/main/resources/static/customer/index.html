@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RythuFresh_Sec | Fresh Vegetables Delivery</title>
+
+    <link rel="stylesheet" href="customer.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        🥬 RythuFresh_Sec
+    </div>
+
+    <ul>
+
+    <li onclick="goHome()" style="cursor:pointer;">
+        🏠 Home
+    </li>
+
+    <li onclick="scrollToVegetables()" style="cursor:pointer;">
+        🥬 Vegetables
+    </li>
+
+    <li onclick="showOffers()" style="cursor:pointer;">
+        🎁 Offers
+    </li>
+
+    <li onclick="showContact()" style="cursor:pointer;">
+        📞 Contact
+    </li>
+
+    <li onclick="openMyOrders()" style="cursor:pointer;">
+        📦 My Orders
+    </li>
+
+    <li onclick="openProfile()" style="cursor:pointer;">
+        👤 Profile
+    </li>
+
+    <li onclick="openCart()" style="cursor:pointer;">
+        🛒 Cart (<span id="cartCount">0</span>)
+    </li>
+
+</ul>
+</nav>
+
+<!-- Cart Sidebar -->
+
+<div id="cartSidebar" class="cart-sidebar">
+
+    <div class="cart-header">
+
+        <h2>🛒 My Cart</h2>
+
+        <span onclick="closeCart()">✖</span>
+
+    </div>
+
+    <div id="cartItems">
+
+    </div>
+
+    <div class="cart-footer">
+
+        <h3 id="totalPrice">Total : ₹0</h3>
+
+        <button onclick="goToCheckout()">
+    Checkout
+</button>
+
+    </div>
+
+</div>
+
+<!-- Hero Section -->
+
+<section class="hero">
+
+    <h1>Fresh Vegetables Delivered Every Morning</h1>
+
+    <p>Fresh • Affordable • Fast Delivery</p>
+
+</section>
+
+<!-- Search -->
+
+<input
+    type="text"
+    id="search"
+    placeholder="Search Vegetables..."
+    onkeyup="searchVegetables()">
+
+<!-- Vegetable Cards -->
+
+<div id="vegetableContainer">
+
+</div>
+
+<script src="customer.js"></script>
+
+</body>
+
+</html>
