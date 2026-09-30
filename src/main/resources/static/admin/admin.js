@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/vegetables";
+const API_URL = "/vegetables";
 
 window.onload = function () {
     loadVegetables();
