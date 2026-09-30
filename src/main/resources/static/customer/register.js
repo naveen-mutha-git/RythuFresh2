@@ -32,7 +32,7 @@ function registerCustomer() {
         password: password
     };
 
-    fetch("http://localhost:8080/customer/register", {
+    fetch("/customer/register", {
 
         method: "POST",
 
