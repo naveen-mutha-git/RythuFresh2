@@ -14,38 +14,9 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
-
             .authorizeHttpRequests(auth -> auth
-
-                // Static files
-                .requestMatchers(
-                    "/",
-                    "/index.html",
-                    "/login",
-                    "/login.html",
-                    "/register.html",
-                    "/customer/**",
-                    "/css/**",
-                    "/js/**",
-                    "/images/**",
-                    "/static/**"
-                ).permitAll()
-
-                // Admin login
-                .requestMatchers("/api/admin/login").permitAll()
-
-                // Temporary - we will secure this properly next
-                .requestMatchers("/api/admin/**").permitAll()
-
-                // Everything else
                 .anyRequest().permitAll()
-            )
-
-            // IMPORTANT: disable Spring's default login page
-            .formLogin(form -> form.disable())
-
-            // IMPORTANT: disable browser Basic Auth popup
-            .httpBasic(basic -> basic.disable());
+            );
 
         return http.build();
     }

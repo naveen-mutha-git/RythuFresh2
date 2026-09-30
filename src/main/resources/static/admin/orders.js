@@ -2,7 +2,7 @@
 // RYTHUFRESH_SEC - ADMIN ORDERS
 // =====================================================
 
-const API_URL = "http://localhost:8080/orders";
+const API_URL = "/orders";
 
 let allOrders = [];
 
