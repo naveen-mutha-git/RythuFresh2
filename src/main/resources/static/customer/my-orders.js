@@ -88,9 +88,9 @@ function loadOrders() {
     // API URL
     // ===============================
 
-    const API_URL =
-        "http://localhost:8080/orders/customer/" +
-        encodeURIComponent(mobile);
+	const API_URL =
+	    "/orders/customer/" +
+	    encodeURIComponent(mobile);
 
 
     console.log(
