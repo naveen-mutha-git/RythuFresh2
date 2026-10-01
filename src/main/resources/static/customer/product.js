@@ -174,6 +174,8 @@ function loadProduct(id) {
                 "Fresh • Healthy • Premium Quality 🥬";
 
 
+				
+
 				// ===================== HEALTH BENEFITS =====================
 
 				const benefits =
@@ -183,11 +185,10 @@ function loadProduct(id) {
 
 				if (data.healthBenefits) {
 
-				    const benefitList =
-				        data.healthBenefits
-				            .split(";")
-				            .map(item => item.trim())
-				            .filter(item => item !== "");
+				    const benefitList = String(data.healthBenefits)
+				        .split(/[;\n]+/)
+				        .map(item => item.trim())
+				        .filter(item => item !== "");
 
 				    benefitList.forEach(item => {
 
@@ -201,29 +202,7 @@ function loadProduct(id) {
 				    });
 
 				}
-
-
-            // IMPORTANT:
-            // Load quantity already selected on home page
-            syncQuantityFromCart();
-
-        })
-
-        .catch(error => {
-
-            console.error(
-                "Product loading error:",
-                error
-            );
-
-            document.getElementById("productName").innerText =
-                "Unable to Load Product";
-
-            document.getElementById("productDescription").innerText =
-                "Please try again.";
-
-        });
-}
+				        
 
 
 // ===================== GET PRODUCT WEIGHT =====================
