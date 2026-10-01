@@ -211,40 +211,64 @@ function displayProduct(data) {
         data
     );
 
+   /* ---------- HEALTH BENEFITS ---------- */
 
-    /* ---------- HEALTH BENEFITS ---------- */
+if (benefitsElement) {
 
-    if (benefitsElement) {
+    benefitsElement.innerHTML = "";
 
-        benefitsElement.innerHTML = "";
+    /*
+       Read the health benefits directly from the
+       vegetable data received from the backend.
+    */
+    const rawBenefits =
+        data.healthBenefits ??
+        data.healthBenefit ??
+        data.health_benefits ??
+        data.benefits;
 
-        if (data.healthBenefits) {
+    let benefitList = [];
 
-            const benefitList =
-                String(data.healthBenefits)
-                    .split(/[;\n]+/)
-                    .map(item => item.trim())
-                    .filter(item => item !== "");
+    if (Array.isArray(rawBenefits)) {
 
-            benefitList.forEach(item => {
+        benefitList = rawBenefits
+            .map(item => String(item).trim())
+            .filter(item => item !== "");
 
-                const li =
-                    document.createElement("li");
+    } else if (
+        rawBenefits !== undefined &&
+        rawBenefits !== null
+    ) {
 
-                li.innerText = item;
+        const value = String(rawBenefits).trim();
 
-                benefitsElement.appendChild(li);
-            });
-
-        } else {
-
-            benefitsElement.innerHTML =
-                "<li>Fresh and nutritious</li>";
-        }
+        benefitList = value
+            .split(/[;\n]+/)
+            .map(item => item.trim())
+            .filter(item => item !== "");
     }
+
+    /*
+       Use the default only when the database
+       does not contain a health benefit.
+    */
+    if (benefitList.length === 0) {
+
+        benefitList = [
+            "Fresh and nutritious"
+        ];
+    }
+
+    benefitList.forEach(item => {
+
+        const li =
+            document.createElement("li");
+
+        li.innerText = item;
+
+        benefitsElement.appendChild(li);
+    });
 }
-
-
 /* =====================================================
    PRODUCT IMAGE
 ===================================================== */
