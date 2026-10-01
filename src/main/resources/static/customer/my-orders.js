@@ -638,7 +638,7 @@ function cancelOrder(orderId) {
 
 
     fetch(
-        "http://localhost:8080/orders/" +
+		"/orders/" +
         orderId +
         "/cancel",
         {
