@@ -140,7 +140,7 @@ function displayVegetables(vegetables) {
             <td>
 
                 <img
-                    src="${vegetable.imageUrl || 'https://via.placeholder.com/60'}"
+				src="/images/vegetables/${vegetable.imageUrl}"
                     alt="${escapeHtml(vegetable.name || 'Vegetable')}"
                     class="vegetable-image"
                 >
