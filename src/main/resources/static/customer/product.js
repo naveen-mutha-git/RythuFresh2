@@ -1,7 +1,5 @@
 const API_URL = "/vegetables";
 
-// ===================== VARIABLES =====================
-
 let quantity = 1;
 let vegetable = null;
 
@@ -9,203 +7,424 @@ let cart =
     JSON.parse(localStorage.getItem("rythuFreshCart")) || [];
 
 
-// ===================== PAGE LOAD =====================
+/* =====================================================
+   PAGE LOAD
+===================================================== */
 
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", function () {
 
-    const params =
-        new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
 
-    const id =
-        params.get("id");
+    console.log("Product ID:", id);
 
-    if (id) {
-
-        loadProduct(id);
-
-    } else {
-
-        console.error("Product ID not found.");
-
-        document.getElementById("productName").innerText =
-            "Product Not Found";
-
+    if (!id) {
+        showProductError("Product ID is missing.");
+        return;
     }
 
+    loadProduct(id);
+
     updateProductCartCount();
-};
+
+    const plusBtn = document.getElementById("plusBtn");
+    const minusBtn = document.getElementById("minusBtn");
+
+    if (plusBtn) {
+        plusBtn.onclick = function () {
+            quantity++;
+            updateQuantityDisplay();
+        };
+    }
+
+    if (minusBtn) {
+        minusBtn.onclick = function () {
+            if (quantity > 1) {
+                quantity--;
+                updateQuantityDisplay();
+            }
+        };
+    }
+});
 
 
-// ===================== LOAD PRODUCT =====================
+/* =====================================================
+   LOAD PRODUCT
+===================================================== */
 
-function loadProduct(id) {
+async function loadProduct(id) {
 
-    fetch(API_URL + "/" + id)
+    const productId = encodeURIComponent(id);
 
-        .then(response => {
+    const url = `${API_URL}/${productId}`;
+
+    console.log("Loading product from:", url);
+
+    let lastError = null;
+
+    /*
+       Railway/Spring Boot can sometimes take a few seconds
+       to wake up. Try the request 3 times.
+    */
+
+    for (let attempt = 1; attempt <= 3; attempt++) {
+
+        try {
+
+            console.log(`Product request attempt ${attempt}`);
+
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json"
+                },
+                cache: "no-store"
+            });
 
             if (!response.ok) {
-                throw new Error("Unable to load product.");
+                throw new Error(
+                    `Server returned ${response.status}`
+                );
             }
 
-            return response.json();
-        })
+            const data = await response.json();
 
-        .then(data => {
+            console.log("Product received:", data);
+
+            if (!data || !data.id) {
+                throw new Error("Invalid product data received.");
+            }
 
             vegetable = data;
 
-			// ===================== PRODUCT IMAGE =====================
+            displayProduct(data);
 
-			const productImage =
-			    document.getElementById("productImage");
+            syncQuantityFromCart();
 
-			productImage.alt = data.name;
+            return;
 
-			// Function to try different image filename formats
-			function tryProductImage(imageElement, imageUrl, productName) {
+        } catch (error) {
 
-			    const candidates = [];
+            console.error(
+                `Product loading failed - attempt ${attempt}:`,
+                error
+            );
 
-			    // 1. Exact filename from MySQL
-			    if (imageUrl) {
-			        candidates.push(
-			            "/images/" + encodeURIComponent(imageUrl)
-			        );
-			    }
+            lastError = error;
 
-			    // 2. Actual product name
-			    if (productName) {
-			        candidates.push(
-			            "/images/" +
-			            encodeURIComponent(productName + ".jpg")
-			        );
-			    }
+            /*
+               Wait before retrying.
+               This is especially useful when Railway
+               is waking the Spring Boot service.
+            */
 
-			    // 3. Lowercase with underscores
-			    if (productName) {
+            if (attempt < 3) {
+                await new Promise(resolve =>
+                    setTimeout(resolve, 2000)
+                );
+            }
+        }
+    }
 
-			        const underscoreName =
-			            productName
-			                .toLowerCase()
-			                .replace(/\s+/g, "_") + ".jpg";
+    console.error("Final product loading error:", lastError);
 
-			        candidates.push(
-			            "/images/" +
-			            encodeURIComponent(underscoreName)
-			        );
-			    }
-
-			    // 4. Lowercase with spaces
-			    if (productName) {
-
-			        const lowercaseName =
-			            productName.toLowerCase() + ".jpg";
-
-			        candidates.push(
-			            "/images/" +
-			            encodeURIComponent(lowercaseName)
-			        );
-			    }
-
-			    let currentIndex = 0;
-
-			    function loadNextImage() {
-
-			        if (currentIndex >= candidates.length) {
-
-			            console.error(
-			                "Image not found for:",
-			                productName,
-			                candidates
-			            );
-
-			            imageElement.removeAttribute("src");
-
-			            return;
-			        }
-
-			        const imagePath =
-			            candidates[currentIndex];
-
-			        currentIndex++;
-
-			        imageElement.onerror = function () {
-
-			            console.warn(
-			                "Image failed:",
-			                imagePath
-			            );
-
-			            loadNextImage();
-			        };
-
-			        imageElement.src = imagePath;
-			    }
-
-			    loadNextImage();
-			}
+    showProductError(
+        "Unable to load this product. Please try again."
+    );
+}
 
 
-			// Load product image
-			tryProductImage(
-			    productImage,
-			    data.imageUrl,
-			    data.name
-			);
+/* =====================================================
+   DISPLAY PRODUCT
+===================================================== */
 
-            // NAME
-            document.getElementById("productName").innerText =
-                data.name;
+function displayProduct(data) {
 
+    const nameElement =
+        document.getElementById("productName");
 
-            // PRICE
-            document.getElementById("productPrice").innerText =
-                "₹" + data.price + " / " + data.unit;
+    const priceElement =
+        document.getElementById("productPrice");
 
+    const descriptionElement =
+        document.getElementById("productDescription");
 
-            // DESCRIPTION
-            document.getElementById("productDescription").innerText =
-                data.description || "";
+    const taglineElement =
+        document.getElementById("productTagline");
 
+    const imageElement =
+        document.getElementById("productImage");
 
-            // TAGLINE
-            document.getElementById("productTagline").innerText =
-                "Fresh • Healthy • Premium Quality 🥬";
+    const benefitsElement =
+        document.getElementById("healthBenefits");
 
 
-				
+    /* ---------- NAME ---------- */
 
-				// ===================== HEALTH BENEFITS =====================
-
-				const benefits =
-				    document.getElementById("healthBenefits");
-
-				benefits.innerHTML = "";
-
-				if (data.healthBenefits) {
-
-				    const benefitList = String(data.healthBenefits)
-				        .split(/[;\n]+/)
-				        .map(item => item.trim())
-				        .filter(item => item !== "");
-
-				    benefitList.forEach(item => {
-
-				        const li =
-				            document.createElement("li");
-
-				        li.innerText = item;
-
-				        benefits.appendChild(li);
-
-				    });
-
-				}
-				        
+    if (nameElement) {
+        nameElement.innerText =
+            data.name || "Vegetable";
+    }
 
 
-// ===================== GET PRODUCT WEIGHT =====================
+    /* ---------- PRICE ---------- */
+
+    if (priceElement) {
+
+        const price =
+            data.price !== undefined &&
+            data.price !== null
+                ? data.price
+                : 0;
+
+        const unit =
+            data.unit || "kg";
+
+        priceElement.innerText =
+            "₹" + price + " / " + unit;
+    }
+
+
+    /* ---------- DESCRIPTION ---------- */
+
+    if (descriptionElement) {
+
+        descriptionElement.innerText =
+            data.description ||
+            "Fresh and healthy vegetable.";
+    }
+
+
+    /* ---------- TAGLINE ---------- */
+
+    if (taglineElement) {
+
+        taglineElement.innerText =
+            "Fresh • Healthy • Premium Quality 🥬";
+    }
+
+
+    /* ---------- IMAGE ---------- */
+
+    loadProductImage(
+        imageElement,
+        data
+    );
+
+
+    /* ---------- HEALTH BENEFITS ---------- */
+
+    if (benefitsElement) {
+
+        benefitsElement.innerHTML = "";
+
+        if (data.healthBenefits) {
+
+            const benefitList =
+                String(data.healthBenefits)
+                    .split(/[;\n]+/)
+                    .map(item => item.trim())
+                    .filter(item => item !== "");
+
+            benefitList.forEach(item => {
+
+                const li =
+                    document.createElement("li");
+
+                li.innerText = item;
+
+                benefitsElement.appendChild(li);
+            });
+
+        } else {
+
+            benefitsElement.innerHTML =
+                "<li>Fresh and nutritious</li>";
+        }
+    }
+}
+
+
+/* =====================================================
+   PRODUCT IMAGE
+===================================================== */
+
+function loadProductImage(imageElement, data) {
+
+    if (!imageElement) {
+        return;
+    }
+
+    const candidates = [];
+
+    const imageUrl = data.imageUrl;
+    const name = data.name;
+
+
+    /*
+       First use the exact image URL from database.
+    */
+
+    if (imageUrl) {
+
+        if (
+            imageUrl.startsWith("http://") ||
+            imageUrl.startsWith("https://")
+        ) {
+
+            candidates.push(imageUrl);
+
+        } else {
+
+            candidates.push(
+                imageUrl.startsWith("/")
+                    ? imageUrl
+                    : "/" + imageUrl
+            );
+
+            candidates.push(
+                "/images/" +
+                encodeURIComponent(imageUrl)
+            );
+        }
+    }
+
+
+    /*
+       Try product name formats.
+    */
+
+    if (name) {
+
+        candidates.push(
+            "/images/" +
+            encodeURIComponent(name + ".jpg")
+        );
+
+        const underscoreName =
+            name
+                .toLowerCase()
+                .replace(/\s+/g, "_") +
+            ".jpg";
+
+        candidates.push(
+            "/images/" +
+            encodeURIComponent(underscoreName)
+        );
+
+        const lowercaseName =
+            name.toLowerCase() + ".jpg";
+
+        candidates.push(
+            "/images/" +
+            encodeURIComponent(lowercaseName)
+        );
+    }
+
+
+    /*
+       Remove duplicate URLs.
+    */
+
+    const uniqueCandidates =
+        [...new Set(candidates)];
+
+
+    let index = 0;
+
+
+    function tryNextImage() {
+
+        if (index >= uniqueCandidates.length) {
+
+            console.error(
+                "No product image found:",
+                data.name,
+                uniqueCandidates
+            );
+
+            /*
+               Hide broken image instead of showing
+               the browser's broken-image icon.
+            */
+
+            imageElement.style.display = "none";
+
+            return;
+        }
+
+        const imagePath =
+            uniqueCandidates[index];
+
+        index++;
+
+        console.log(
+            "Trying product image:",
+            imagePath
+        );
+
+        imageElement.onerror =
+            function () {
+
+                console.warn(
+                    "Image failed:",
+                    imagePath
+                );
+
+                tryNextImage();
+            };
+
+        imageElement.onload =
+            function () {
+
+                imageElement.style.display =
+                    "block";
+
+            };
+
+        imageElement.src = imagePath;
+    }
+
+
+    tryNextImage();
+}
+
+
+/* =====================================================
+   PRODUCT ERROR
+===================================================== */
+
+function showProductError(message) {
+
+    const nameElement =
+        document.getElementById("productName");
+
+    const priceElement =
+        document.getElementById("productPrice");
+
+    const descriptionElement =
+        document.getElementById("productDescription");
+
+    if (nameElement) {
+        nameElement.innerText =
+            "Unable to Load Product";
+    }
+
+    if (priceElement) {
+        priceElement.innerText =
+            "Please try again";
+    }
+
+    if (descriptionElement) {
+        descriptionElement.innerText =
+            message;
+    }
+}
+
+
+/* =====================================================
+   PRODUCT WEIGHT
+===================================================== */
 
 function getProductWeight() {
 
@@ -214,19 +433,20 @@ function getProductWeight() {
     }
 
     const unit =
-        vegetable.unit.toLowerCase();
+        String(vegetable.unit || "")
+            .toLowerCase();
 
     if (unit === "kg") {
-
         return "1kg";
-
     }
 
     return vegetable.unit;
 }
 
 
-// ===================== SYNC QUANTITY FROM CART =====================
+/* =====================================================
+   SYNC QUANTITY
+===================================================== */
 
 function syncQuantityFromCart() {
 
@@ -234,7 +454,6 @@ function syncQuantityFromCart() {
         return;
     }
 
-    // Always get latest cart
     cart =
         JSON.parse(
             localStorage.getItem("rythuFreshCart")
@@ -245,28 +464,28 @@ function syncQuantityFromCart() {
 
     const existing =
         cart.find(item =>
-            Number(item.id) === Number(vegetable.id) &&
+            Number(item.id) ===
+                Number(vegetable.id) &&
             item.weight === productWeight
         );
-
 
     if (existing) {
 
         quantity =
-            existing.quantity;
+            Number(existing.quantity) || 1;
 
     } else {
 
         quantity = 1;
-
     }
-
 
     updateQuantityDisplay();
 }
 
 
-// ===================== UPDATE QUANTITY DISPLAY =====================
+/* =====================================================
+   QUANTITY DISPLAY
+===================================================== */
 
 function updateQuantityDisplay() {
 
@@ -277,52 +496,26 @@ function updateQuantityDisplay() {
 
         quantityElement.innerText =
             quantity;
-
     }
 }
 
 
-// ===================== PLUS BUTTON =====================
-
-document.getElementById("plusBtn").onclick =
-    function () {
-
-        quantity++;
-
-        updateQuantityDisplay();
-
-    };
-
-
-// ===================== MINUS BUTTON =====================
-
-document.getElementById("minusBtn").onclick =
-    function () {
-
-        if (quantity > 1) {
-
-            quantity--;
-
-            updateQuantityDisplay();
-
-        }
-
-    };
-
-
-// ===================== ADD TO CART =====================
+/* =====================================================
+   ADD TO CART
+===================================================== */
 
 function addToCart() {
 
     if (!vegetable) {
 
-        alert("Product is still loading.");
+        alert(
+            "Product is still loading. Please wait."
+        );
 
         return;
     }
 
 
-    // OUT OF STOCK CHECK
     if (!vegetable.inStock) {
 
         alert(
@@ -333,36 +526,31 @@ function addToCart() {
     }
 
 
-    // Get latest cart
     cart =
         JSON.parse(
             localStorage.getItem("rythuFreshCart")
         ) || [];
 
 
-    // IMPORTANT:
-    // Use same weight format as customer.js
     const productWeight =
         getProductWeight();
 
 
-    // Find existing product
     const existing =
         cart.find(item =>
-            Number(item.id) === Number(vegetable.id) &&
+            Number(item.id) ===
+                Number(vegetable.id) &&
             item.weight === productWeight
         );
 
 
     if (existing) {
 
-        // Update quantity
         existing.quantity =
             quantity;
 
     } else {
 
-        // Add new product
         cart.push({
 
             id:
@@ -375,17 +563,16 @@ function addToCart() {
                 vegetable.imageUrl,
 
             price:
-                vegetable.price,
+                Number(vegetable.price),
 
             originalPrice:
-                vegetable.price,
+                Number(vegetable.price),
 
             weight:
                 productWeight,
 
             quantity:
                 quantity
-
         });
     }
 
@@ -393,11 +580,14 @@ function addToCart() {
     saveCart();
 
     updateProductCartCount();
-	renderProductCart();
+
+    renderProductCart();
 }
 
 
-// ===================== SAVE CART =====================
+/* =====================================================
+   SAVE CART
+===================================================== */
 
 function saveCart() {
 
@@ -408,7 +598,9 @@ function saveCart() {
 }
 
 
-// ===================== CART COUNT =====================
+/* =====================================================
+   CART COUNT
+===================================================== */
 
 function updateProductCartCount() {
 
@@ -421,7 +613,7 @@ function updateProductCartCount() {
     const totalItems =
         latestCart.reduce(
             (sum, item) =>
-                sum + Number(item.quantity),
+                sum + Number(item.quantity || 0),
             0
         );
 
@@ -436,12 +628,13 @@ function updateProductCartCount() {
 
         cartCount.innerText =
             totalItems;
-
     }
 }
 
 
-// ===================== GO HOME =====================
+/* =====================================================
+   HOME
+===================================================== */
 
 function goHome() {
 
@@ -450,11 +643,12 @@ function goHome() {
 }
 
 
-// ===================== OPEN CART =====================
+/* =====================================================
+   OPEN CART
+===================================================== */
 
 function openCart() {
 
-    // Always get latest cart
     cart =
         JSON.parse(
             localStorage.getItem("rythuFreshCart")
@@ -462,25 +656,35 @@ function openCart() {
 
     renderProductCart();
 
-    document.getElementById(
-        "cartSidebar"
-    ).style.right = "0";
+    const sidebar =
+        document.getElementById("cartSidebar");
 
+    if (sidebar) {
+
+        sidebar.style.right = "0";
+    }
 }
 
 
-// ===================== CLOSE CART =====================
+/* =====================================================
+   CLOSE CART
+===================================================== */
 
 function closeCart() {
 
-    document.getElementById(
-        "cartSidebar"
-    ).style.right = "-420px";
+    const sidebar =
+        document.getElementById("cartSidebar");
 
+    if (sidebar) {
+
+        sidebar.style.right = "-420px";
+    }
 }
 
 
-// ===================== RENDER PRODUCT CART =====================
+/* =====================================================
+   RENDER CART
+===================================================== */
 
 function renderProductCart() {
 
@@ -507,8 +711,6 @@ function renderProductCart() {
     let total = 0;
 
 
-    // EMPTY CART
-
     if (cart.length === 0) {
 
         cartItems.innerHTML = `
@@ -524,16 +726,14 @@ function renderProductCart() {
             "Total : ₹0";
 
         return;
-
     }
 
-
-    // CART PRODUCTS
 
     cart.forEach(item => {
 
         const subtotal =
-            item.price * item.quantity;
+            Number(item.price) *
+            Number(item.quantity);
 
         total += subtotal;
 
@@ -542,16 +742,18 @@ function renderProductCart() {
 
             <div class="cart-item">
 
-			<img
-			    src="/images/${encodeURIComponent(item.image)}"
-			    alt="${item.name}"
-			    onerror="
-			        this.onerror = null;
-			        this.src = '/images/' +
-			        encodeURIComponent('${item.name}.jpg');
-			    "
-			>
-
+                <img
+                    src="/images/${encodeURIComponent(item.image || "")}"
+                    alt="${item.name || "Vegetable"}"
+                    onerror="
+                        this.onerror = null;
+                        this.src =
+                        '/images/' +
+                        encodeURIComponent(
+                            '${item.name}.jpg'
+                        );
+                    "
+                >
 
                 <div class="cart-details">
 
@@ -569,15 +771,17 @@ function renderProductCart() {
                         ₹${item.price}
                     </p>
 
-
                     <div class="qty-box">
 
                         <button
                             class="qty-btn"
-                            onclick="decreaseProductCartQuantity(
-                                ${item.id},
-                                '${item.weight}'
-                            )">
+                            onclick="
+                                decreaseProductCartQuantity(
+                                    ${item.id},
+                                    '${item.weight}'
+                                )
+                            "
+                        >
                             −
                         </button>
 
@@ -587,15 +791,17 @@ function renderProductCart() {
 
                         <button
                             class="qty-btn"
-                            onclick="increaseProductCartQuantity(
-                                ${item.id},
-                                '${item.weight}'
-                            )">
+                            onclick="
+                                increaseProductCartQuantity(
+                                    ${item.id},
+                                    '${item.weight}'
+                                )
+                            "
+                        >
                             +
                         </button>
 
                     </div>
-
 
                     <p>
                         <b>Subtotal :</b>
@@ -604,38 +810,37 @@ function renderProductCart() {
 
                 </div>
 
-
                 <button
                     class="delete-btn"
-                    onclick="removeProductCartItem(
-                        ${item.id},
-                        '${item.weight}'
-                    )">
-
+                    onclick="
+                        removeProductCartItem(
+                            ${item.id},
+                            '${item.weight}'
+                        )
+                    "
+                >
                     ✕
-
                 </button>
 
             </div>
-
         `;
-
     });
 
 
     totalPrice.innerText =
         "Total : ₹" + total;
-
 }
 
 
-// ===================== INCREASE CART QUANTITY =====================
+/* =====================================================
+   INCREASE CART QUANTITY
+===================================================== */
 
 function increaseProductCartQuantity(id, weight) {
 
     const item =
         cart.find(item =>
-            item.id === id &&
+            Number(item.id) === Number(id) &&
             item.weight === weight
         );
 
@@ -643,7 +848,6 @@ function increaseProductCartQuantity(id, weight) {
     if (item) {
 
         item.quantity++;
-
     }
 
 
@@ -654,17 +858,18 @@ function increaseProductCartQuantity(id, weight) {
     renderProductCart();
 
     syncCurrentProductQuantity();
-
 }
 
 
-// ===================== DECREASE CART QUANTITY =====================
+/* =====================================================
+   DECREASE CART QUANTITY
+===================================================== */
 
 function decreaseProductCartQuantity(id, weight) {
 
     const item =
         cart.find(item =>
-            item.id === id &&
+            Number(item.id) === Number(id) &&
             item.weight === weight
         );
 
@@ -686,7 +891,6 @@ function decreaseProductCartQuantity(id, weight) {
         );
 
         return;
-
     }
 
 
@@ -697,18 +901,19 @@ function decreaseProductCartQuantity(id, weight) {
     renderProductCart();
 
     syncCurrentProductQuantity();
-
 }
 
 
-// ===================== REMOVE CART ITEM =====================
+/* =====================================================
+   REMOVE CART ITEM
+===================================================== */
 
 function removeProductCartItem(id, weight) {
 
     cart =
         cart.filter(item =>
             !(
-                item.id === id &&
+                Number(item.id) === Number(id) &&
                 item.weight === weight
             )
         );
@@ -721,11 +926,12 @@ function removeProductCartItem(id, weight) {
     renderProductCart();
 
     syncCurrentProductQuantity();
-
 }
 
 
-// ===================== SYNC CURRENT PRODUCT =====================
+/* =====================================================
+   SYNC CURRENT PRODUCT
+===================================================== */
 
 function syncCurrentProductQuantity() {
 
@@ -735,14 +941,16 @@ function syncCurrentProductQuantity() {
 
 
     const productWeight =
-        vegetable.unit.toLowerCase() === "kg"
-            ? "1kg"
-            : vegetable.unit;
+        String(vegetable.unit || "")
+            .toLowerCase() === "kg"
+                ? "1kg"
+                : vegetable.unit;
 
 
     const existing =
         cart.find(item =>
-            item.id === vegetable.id &&
+            Number(item.id) ===
+                Number(vegetable.id) &&
             item.weight === productWeight
         );
 
@@ -750,31 +958,31 @@ function syncCurrentProductQuantity() {
     if (existing) {
 
         quantity =
-            existing.quantity;
+            Number(existing.quantity) || 1;
 
     } else {
 
         quantity = 1;
-
     }
 
 
     updateQuantityDisplay();
-
 }
 
 
-// ===================== CHECKOUT =====================
+/* =====================================================
+   CHECKOUT
+===================================================== */
 
 function goToCart() {
 
-    window.location.href = "index.html?openCart=true";
-
+    window.location.href =
+        "index.html?openCart=true";
 }
-// ===================== GO TO CHECKOUT =====================
+
 
 function goToCheckout() {
 
-    window.location.href = "checkout.html";
-
+    window.location.href =
+        "checkout.html";
 }
