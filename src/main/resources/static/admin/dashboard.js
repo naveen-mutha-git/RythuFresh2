@@ -1,133 +1,249 @@
-// ================================
 // RYTHUFRESH ADMIN DASHBOARD
-// ================================
+
+async function loadDashboard() {
+
+    try {
+
+        const [vegetablesRes, ordersRes, customersRes] =
+            await Promise.all([
+                fetch("/vegetables/all"),
+                fetch("/orders"),
+                fetch("/customer/all")
+            ]);
+
+        if (
+            !vegetablesRes.ok ||
+            !ordersRes.ok ||
+            !customersRes.ok
+        ) {
+            throw new Error("Admin API failed");
+        }
+
+        const vegetables =
+            await vegetablesRes.json();
+
+        const orders =
+            await ordersRes.json();
+
+        const customers =
+            await customersRes.json();
 
 
-// ================================
-// LOAD DASHBOARD DATA
-// ================================
+        // =========================
+        // TODAY
+        // =========================
 
-function loadDashboard() {
+        const now = new Date();
 
-    fetch("/api/admin/dashboard")
-
-        .then(response => {
-
-            if (!response.ok) {
-
-                throw new Error(
-                    "Failed to load dashboard data"
-                );
-
-            }
-
-            return response.json();
-
-        })
-
-        .then(data => {
-
-            // ================================
-            // BASIC COUNTS
-            // ================================
-
-            // Total Vegetables
-            document.getElementById(
-                "vegetableCount"
-            ).textContent = data.vegetableCount;
-
-
-            // Total Customers
-            document.getElementById(
-                "customerCount"
-            ).textContent = data.customerCount;
-
-
-            // Total Orders
-            document.getElementById(
-                "orderCount"
-            ).textContent = data.orderCount;
-
-
-            // Today's Orders
-            document.getElementById(
-                "todayOrderCount"
-            ).textContent = data.todayOrderCount;
-
-
-            // ================================
-            // REVENUE
-            // ================================
-
-            // Today's Revenue
-            document.getElementById(
-                "todayRevenue"
-            ).textContent =
-                "₹" + Number(data.todayRevenue || 0).toFixed(2);
-
-
-            // Total Revenue
-            document.getElementById(
-                "totalRevenue"
-            ).textContent =
-                "₹" + Number(data.totalRevenue || 0).toFixed(2);
-
-
-            // ================================
-            // ORDER STATUS
-            // ================================
-
-            // Pending Orders
-            document.getElementById(
-                "pendingOrders"
-            ).textContent =
-                data.pendingOrders;
-
-
-            // Delivered Orders
-            document.getElementById(
-                "deliveredOrders"
-            ).textContent =
-                data.deliveredOrders;
-
-        })
-
-        .catch(error => {
-
-            console.error(
-                "Dashboard error:",
-                error
+        const startOfDay =
+            new Date(
+                now.getFullYear(),
+                now.getMonth(),
+                now.getDate()
             );
 
-        });
+        const endOfDay =
+            new Date(
+                now.getFullYear(),
+                now.getMonth(),
+                now.getDate() + 1
+            );
 
-}
+
+        const todayOrders =
+            orders.filter(order => {
+
+                if (!order.orderDate) {
+                    return false;
+                }
+
+                const date =
+                    new Date(order.orderDate);
+
+                return (
+                    date >= startOfDay &&
+                    date < endOfDay
+                );
+
+            });
 
 
-// ================================
-// LOGOUT
-// ================================
+        // =========================
+        // ACTIVE ORDERS
+        // Cancelled excluded
+        // =========================
 
-function logout() {
+        const activeOrders =
+            orders.filter(order =>
+                String(
+                    order.orderStatus || ""
+                ).toLowerCase() !== "cancelled"
+            );
 
-    const confirmLogout =
-        confirm("Are you sure you want to logout?");
 
-    if (!confirmLogout) {
+        // =========================
+        // PENDING
+        // =========================
 
-        return;
+        const pendingOrders =
+            orders.filter(order =>
+                String(
+                    order.orderStatus || ""
+                ).toLowerCase() === "pending"
+            );
+
+
+        // =========================
+        // DELIVERED
+        // =========================
+
+        const deliveredOrders =
+            orders.filter(order =>
+                String(
+                    order.orderStatus || ""
+                ).toLowerCase() === "delivered"
+            );
+
+
+        // =========================
+        // TOTAL REVENUE
+        // =========================
+
+        const totalRevenue =
+            activeOrders.reduce(
+                (total, order) =>
+                    total +
+                    Number(
+                        order.totalAmount || 0
+                    ),
+                0
+            );
+
+
+        // =========================
+        // TODAY REVENUE
+        // =========================
+
+        const todayRevenue =
+            todayOrders
+                .filter(order =>
+                    String(
+                        order.orderStatus || ""
+                    ).toLowerCase() !==
+                    "cancelled"
+                )
+                .reduce(
+                    (total, order) =>
+                        total +
+                        Number(
+                            order.totalAmount || 0
+                        ),
+                    0
+                );
+
+
+        // =========================
+        // UPDATE DASHBOARD
+        // =========================
+
+        setText(
+            "vegetableCount",
+            vegetables.length
+        );
+
+        setText(
+            "orderCount",
+            orders.length
+        );
+
+        setText(
+            "customerCount",
+            customers.length
+        );
+
+        setText(
+            "todayOrderCount",
+            todayOrders.length
+        );
+
+        setText(
+            "todayRevenue",
+            "₹" +
+            todayRevenue.toFixed(2)
+        );
+
+        setText(
+            "totalRevenue",
+            "₹" +
+            totalRevenue.toFixed(2)
+        );
+
+        setText(
+            "pendingOrders",
+            pendingOrders.length
+        );
+
+        setText(
+            "deliveredOrders",
+            deliveredOrders.length
+        );
 
     }
 
-    window.location.href =
-        "admin-login.html";
+    catch (error) {
+
+        console.error(
+            "Dashboard error:",
+            error
+        );
+
+    }
 
 }
 
 
-// ================================
-// OPEN VEGETABLES
-// ================================
+// =========================
+// SET TEXT
+// =========================
+
+function setText(id, value) {
+
+    const element =
+        document.getElementById(id);
+
+    if (element) {
+
+        element.textContent =
+            value;
+
+    }
+
+}
+
+
+// =========================
+// LOGOUT
+// =========================
+
+function logout() {
+
+    if (
+        confirm(
+            "Are you sure you want to logout?"
+        )
+    ) {
+
+        window.location.href =
+            "admin-login.html";
+
+    }
+
+}
+
+
+// =========================
+// NAVIGATION
+// =========================
 
 function openVegetables() {
 
@@ -137,10 +253,6 @@ function openVegetables() {
 }
 
 
-// ================================
-// OPEN ORDERS
-// ================================
-
 function openOrders() {
 
     window.location.href =
@@ -148,10 +260,6 @@ function openOrders() {
 
 }
 
-
-// ================================
-// OPEN CUSTOMERS
-// ================================
 
 function openCustomers() {
 
@@ -161,9 +269,9 @@ function openCustomers() {
 }
 
 
-// ================================
-// START DASHBOARD
-// ================================
+// =========================
+// START
+// =========================
 
 document.addEventListener(
     "DOMContentLoaded",
