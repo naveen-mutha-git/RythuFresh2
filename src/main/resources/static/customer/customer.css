@@ -2324,3 +2324,74 @@ nav li:hover {
 
     text-align: center;
 }
+/* =====================================================
+   MOBILE - COMPACT VEGETABLE PRODUCTS
+===================================================== */
+
+@media (max-width: 600px) {
+
+    /* Vegetable grid */
+    #vegetableContainer {
+        width: 94%;
+        padding: 5px 0 30px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    /* Product card */
+    .vegetable-card {
+        border-radius: 12px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Smaller product image area */
+    .vegetable-image-container {
+        height: 125px;
+    }
+
+    .vegetable-image {
+        width: 100%;
+        height: 100%;
+        padding: 6px;
+    }
+
+    /* Product information */
+    .vegetable-info {
+        padding: 10px;
+    }
+
+    .vegetable-info h2 {
+        font-size: 16px;
+        line-height: 1.2;
+        margin-bottom: 4px;
+    }
+
+    .telugu-name {
+        font-size: 13px;
+        margin-bottom: 5px;
+        min-height: 20px;
+    }
+
+    /* Price */
+    .price {
+        font-size: 17px;
+        margin-bottom: 4px;
+    }
+
+    .price span {
+        font-size: 12px;
+    }
+
+    /* Stock */
+    .stock {
+        font-size: 12px;
+        margin: 4px 0 8px;
+    }
+
+    /* Add button */
+    .add-cart-btn {
+        height: 42px;
+        font-size: 14px;
+        border-radius: 7px;
+    }
+}
