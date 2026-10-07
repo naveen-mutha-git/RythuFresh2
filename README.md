@@ -44,7 +44,6 @@ The project helps customers easily browse vegetables, view prices, add products 
 
 ### Tools & Deployment
 - IntelliJ IDEA
-- VS Code
 - Postman
 - Git
 - GitHub
